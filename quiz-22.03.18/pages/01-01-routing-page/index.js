@@ -1,78 +1,120 @@
-import { useQuery, gql } from "@apollo/client";
+// import axios from "axios";
+import { useState } from "react";
+import { useMutation, gql } from "@apollo/client";
 import { useRouter } from "next/router";
+import {
+  PageWrap,
+  Wrap,
+  Title,
+  Seller,
+  Name,
+  Detail,
+  Price,
+  Button,
+} from "../../styles/emotion";
 
-const FETCH_PRODUCT = gql`
-  query fetchProduct($productId: ID) {
-    fetchProduct(productId: $productId) {
+const CREATE_PRODUCT = gql`
+  mutation createProduct(
+    $seller: String
+    $createProductInput: CreateProductInput!
+  ) {
+    createProduct(seller: $seller, createProductInput: $createProductInput) {
       _id
-      seller
-      name
-      detail
-      price
+      number
+      message
     }
   }
-  # query fetchBoard($number: Int) {
-  #   fetchBoard(number: $number) {
-  #     number
-  #     writer
-  #     title
-  #     contents
-  #   }
-  # }
 `;
 
-export default function DynamicRoutedPage() {
+export default function DynamicRoutingPage() {
+  const [mySeller, setMySeller] = useState("");
+  const [myName, setMyName] = useState("");
+  const [myDetail, setMyDetail] = useState("");
+  const [myPrice, setMyPrice] = useState("");
+
+  const [createProduct] = useMutation(CREATE_PRODUCT);
+  const [data, setData] = useState("");
   const router = useRouter();
-  console.log(router);
 
-  const { data } = useQuery(FETCH_PRODUCT, {
-    variables: { productId: "09dbf78e-a8c0-4c1c-becc-26632f525afe" },
-  });
+  const onClickSubmit = async () => {
+    try {
+      const result = await createProduct({
+        variables: {
+          seller: mySeller,
+          createProductInput: {
+            name: myName,
+            detail: myDetail,
+            price: myPrice,
+          },
+        },
+      });
+      // router.push(`/01-02-routed-page/${result.data.createBoard.number}`);
+      router.push(`/01-02-routed-page/${result.data.createProduct._id}`);
+      // setData(result.data.createProduct.message);
+      alert("상품 등록에 성공했어요!");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
-  console.log(data);
+  const onChangeSeller = (e) => {
+    setMySeller(e.target.value);
+  };
+
+  const onChangeName = (e) => {
+    setMyName(e.target.value);
+  };
+
+  const onChangeDetail = (e) => {
+    setMyDetail(e.target.value);
+  };
+
+  const onChangePrice = (e) => {
+    setMyPrice(Number(e.target.value));
+  };
 
   return (
-    <div>
-      {/* {data === data?.fetchProduct.seller
-        ? " loading... "
-        : data?.fetchProduct.seller}
-      <br />
-      {data === data?.fetchProduct.name
-        ? " loading... "
-        : data?.fetchProduct.name}
-      <br />
-      {data === data?.fetchProduct.detail
-        ? " loading... "
-        : data?.fetchProduct.detail}
-      <br />
-      {data === data?.fetchProduct.price
-        ? " loading... "
-        : data?.fetchProduct.price} */}
+    // <div>
+    //   판매자:
+    //   <input type="text" onChange={onChangeSeller} />
+    //   <br />
+    //   판매명:
+    //   <input type="text" onChange={onChangeName} />
+    //   <br />
+    //   설명:
+    //   <input type="text" onChange={onChangeDetail} />
+    //   <br />
+    //   가격:
+    //   <input type="text"  />
+    //   <br />
+    //   <button onClick={onClickSubmit}>상품 등록</button>
+    // </div>
 
-      <div>
-        판매자:{" "}
-        {data === data?.fetchProduct.seller
-          ? " loading... "
-          : data?.fetchProduct.seller}
-      </div>
-      <div>
-        상품명:{" "}
-        {data === data?.fetchProduct.name
-          ? " loading... "
-          : data?.fetchProduct.name}
-      </div>
-      <div>
-        상품내용:{" "}
-        {data === data?.fetchProduct.detail
-          ? " loading... "
-          : data?.fetchProduct.detail}
-      </div>
-      <div>
-        상품가격:{" "}
-        {data === data?.fetchProduct.price
-          ? " loading... "
-          : data?.fetchProduct.price}
-      </div>
-    </div>
+    <PageWrap>
+      <Wrap>
+        <Title>판매자명</Title>
+        <Seller onChange={onChangeSeller}></Seller>
+      </Wrap>
+
+      <Wrap>
+        <Title>판매물건</Title>
+        <Name onChange={onChangeName}></Name>
+      </Wrap>
+
+      <Wrap>
+        <Title>판매내용</Title>
+        <Detail onChange={onChangeDetail}></Detail>
+      </Wrap>
+
+      <Wrap>
+        <Title>판매가격</Title>
+        <Price onChange={onChangePrice}></Price>
+      </Wrap>
+
+      <Wrap>
+        <Title>상품등록</Title>
+        <Button onClick={onClickSubmit}>등록하기</Button>
+      </Wrap>
+    </PageWrap>
   );
 }
