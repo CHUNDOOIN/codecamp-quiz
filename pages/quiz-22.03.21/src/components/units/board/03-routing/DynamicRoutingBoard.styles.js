@@ -13,8 +13,6 @@ export const Wrap = styled.div`
 
   margin: 100px auto;
   padding: 100px;
-
-  /* background-color: ${(props) => (props.isActive ? "yellow" : "none")}; */
 `;
 
 export const Writer = styled.input`
@@ -35,4 +33,6 @@ export const Contents = styled.input`
 export const SubmitButton = styled.button`
   width: 100%;
   border-color: green;
+
+  background-color: ${(props) => (props.isActive ? "yellow" : "none")};
 `;

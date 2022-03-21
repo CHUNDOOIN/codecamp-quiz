@@ -13,8 +13,6 @@ export const BoardWrap = styled.div`
 
   margin: 100px auto;
   padding: 100px;
-
-  /* background-color: ${(props) => (props.isActive ? "yellow" : "none")}; */
 `;
 
 export const BoardNumber = styled.div`
@@ -35,7 +33,8 @@ export const BoardContents = styled.div`
   border-color: yellow;
 `;
 
-// export const SubmitButton = styled.button`
-//   width: 100%;
-//   border-color: green;
-// `;
+export const SubmitButton = styled.button`
+  width: 100%;
+  /* background-color: ${(props) => (props.isActive ? "yellow" : "none")}; */
+  /* border-color: green; */
+`;

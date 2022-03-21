@@ -12,7 +12,7 @@ export default function BoardWriteUI(props) {
       작성자: <Writer type="text" onChange={props.onChangeWriter} />
       제목: <Title type="text" onChange={props.onChangeTitle} />
       내용: <Contents type="text" onChange={props.onChangeContents} />
-      <SubmitButton onClick={props.callGraphqlApi}>
+      <SubmitButton onClick={props.callGraphqlApi} isActive={props.isActive}>
         GRAPHQL-API 요청하기!!!
       </SubmitButton>
     </Wrap>
