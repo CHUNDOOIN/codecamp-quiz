@@ -9,9 +9,9 @@ const classmates = [
 // (1)
 classmates
   .filter((el) => el.school === "토끼초등학교")
-  .map((el) => ({ name: el.name, age: el.age, candy: 10 }));
+  .map((el) => ({ name: el.name, age: el.age, school: el.school, candy: 10 }));
 
 // (2)
 classmates
   .filter((el) => el.school === "다람쥐초등학교")
-  .map((el) => ({ name: el.name + "어린이", age: el.age }));
+  .map((el) => ({ name: el.name + "어린이", age: el.age, school: el.school }));
