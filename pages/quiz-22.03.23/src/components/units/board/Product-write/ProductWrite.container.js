@@ -22,7 +22,6 @@ export default function ProductWrite(props) {
   const onClickUpdate = async () => {
     await updateProduct({
       variables: {
-        seller: mySeller,
         productId: router.query.mynumber,
         updateProductInput: {
           name: myName,
