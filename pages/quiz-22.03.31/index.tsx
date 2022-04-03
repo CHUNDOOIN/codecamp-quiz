@@ -59,7 +59,7 @@ const WrapDown = styled.div`
 
 export default function Boards() {
   const [isDisabled, setIsDisabled] = useState(false);
-  const [nowPage, setNowPage] = useState("");
+  const [nowPage, setNowPage] = useState(1);
   const [nowBoardNum, setNowBoardNum] = useState(0);
   const [startPage, setStartPage] = useState(1);
   const { data, refetch } = useQuery(FETCH_BOARDS);
@@ -73,25 +73,29 @@ export default function Boards() {
   console.log(data2);
 
   const onClickPage = (e: any) => {
-    refetch({ page: Number(e.target.id) });
     setNowBoardNum(Number(e.target.id - 1) * 10);
-    setNowPage(e.target.id);
+    setNowPage(Number(e.target.id));
+    refetch({ page: Number(e.target.id) });
   };
 
   const onClickPrevMove = () => {
     if (startPage === 1) {
-      setIsDisabled(true);
       return;
     }
     setStartPage((prev) => prev - 10);
+    setNowPage((prev) => prev - 10);
+    setNowBoardNum((prev) => prev - 100);
+    refetch({ page: startPage - 10 });
   };
 
   const onClickNextMove = () => {
     if (startPage + 10 > lastPage) {
-      setIsDisabled(true);
       return;
     }
     setStartPage((prev) => prev + 10);
+    setNowPage((prev) => prev + 10);
+    setNowBoardNum((prev) => prev + 100);
+    refetch({ page: startPage + 10 });
   };
 
   return (
@@ -118,7 +122,7 @@ export default function Boards() {
             index + startPage <= lastPage && (
               <NumberDiv
                 style={
-                  nowPage === String(index + startPage)
+                  nowPage === Number(index + startPage)
                     ? { color: "red" }
                     : { color: "black" }
                 }
