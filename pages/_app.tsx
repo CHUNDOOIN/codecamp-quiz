@@ -12,6 +12,7 @@ import { createUploadLink } from "apollo-upload-client";
 import { Global } from "@emotion/react";
 import { globalStyles } from "../pages/quiz-22.03.30/layout/globalStyle";
 import Layout from "./quiz-22.03.30/layout";
+import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps }: AppProps) {
   // 아폴로에서 이렇게 맨듬 ㅠㅠ 바꾸면 작동이 안된다....
@@ -25,12 +26,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
 
   return (
-    <ApolloProvider client={client}>
-      <Global styles={globalStyles}></Global>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ApolloProvider>
+    <RecoilRoot>
+      <ApolloProvider client={client}>
+        <Global styles={globalStyles}></Global>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ApolloProvider>
+    </RecoilRoot>
   );
 }
 
