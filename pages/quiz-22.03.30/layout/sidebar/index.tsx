@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
-  height: 500px;
-  width: 150px;
+  height: 1000px;
+  width: 300px;
   background-color: orange;
 `;
 
