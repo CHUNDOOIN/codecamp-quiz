@@ -70,23 +70,7 @@ function LoginPage() {
 
     // 4. 로그인 성공 페이지로 이동하기
     alert("로그인에 성공하였습니다.");
-
-    // 5. 장바구니 확인하기
-    const baskets = JSON.parse(localStorage.getItem("baskets") || "[]");
-    console.log(baskets[0]);
-    if (baskets.length !== 0) {
-      if (
-        confirm(
-          "비회원으로 담긴 게시물 장바구니가 존재합니다. 이동하시겠습니까?"
-        )
-      ) {
-        router.push("/quiz-22.04.19/2-1/basket");
-      } else {
-        router.push("/quiz-22.04.19/2-1/boards");
-      }
-    } else {
-      router.push("/quiz-22.04.19/2-1/boards");
-    }
+    router.push("/quiz-22.04.21/loading");
   };
 
   return (
